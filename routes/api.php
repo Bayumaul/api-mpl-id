@@ -23,5 +23,5 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/team/{team}', [TeamController::class, 'getTeamDetails']);
     Route::get('/teams', [TeamController::class, 'getTeams']);
     Route::get('/match-schedule', [MatchScheduleController::class, 'index']);
-    Route::get('/match-schedule/week/{week}', [MatchScheduleController::class, 'getMatchesByWeek']);
+    Route::get('/match-schedule/{week}', [MatchScheduleController::class, 'getMatchesByWeek']);
 });
