@@ -9,8 +9,8 @@ use Illuminate\Routing\Controller as BaseController;
 /**
  * @OA\Info(
  *      version="1.0.0",
- *      title="Dokumentasi API",
- *      description="Lorem Ipsum",
+ *      title="Unofficial API Documentation for MPL Indonesia",
+ *      description="Official documentation for the Unofficial API for MPL Indonesia. This API provides access to match schedules from MPL Indonesia.",
  *      @OA\Contact(
  *          email="bayu.maulanaikhsan123@gmail.com"
  *      ),
@@ -22,9 +22,10 @@ use Illuminate\Routing\Controller as BaseController;
  *
  * @OA\Server(
  *      url=L5_SWAGGER_CONST_HOST,
- *      description="Demo API Server"
+ *      description="Server for Unofficial MPL Indonesia API"
  * )
  */
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
@@ -33,6 +34,7 @@ class Controller extends BaseController
     {
         $response = [
             'success' => true,
+            'status' => $code,
             'data'    => $result,
         ];
 

@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Dokumentasi API",
-        "description": "Lorem Ipsum",
+        "title": "Unofficial API Documentation for MPL Indonesia",
+        "description": "Official documentation for the Unofficial API for MPL Indonesia. This API provides access to match schedules from MPL Indonesia.",
         "contact": {
             "email": "bayu.maulanaikhsan123@gmail.com"
         },
@@ -15,17 +15,148 @@
     "servers": [
         {
             "url": "http://127.0.0.1:8000/api/v1",
-            "description": "Demo API Server"
+            "description": "Server for Unofficial MPL Indonesia API"
         }
     ],
     "paths": {
-        "/api/team/{team}": {
+        "/match-schedule": {
+            "get": {
+                "tags": [
+                    "Match Schedule"
+                ],
+                "summary": "Get match schedule",
+                "operationId": "getMatchSchedule",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/MatchSchedule"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to fetch match schedule"
+                    }
+                }
+            }
+        },
+        "/match-schedule/{week}": {
+            "get": {
+                "tags": [
+                    "Match Schedule"
+                ],
+                "summary": "Get match schedule for a specific week",
+                "operationId": "getMatchScheduleByWeek",
+                "parameters": [
+                    {
+                        "name": "week",
+                        "in": "path",
+                        "description": "Week number",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "week": {
+                                            "type": "integer"
+                                        },
+                                        "schedule": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ScheduleWeek"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Match schedule not found"
+                    },
+                    "500": {
+                        "description": "Failed to fetch match schedule"
+                    }
+                }
+            }
+        },
+        "/teams": {
             "get": {
                 "tags": [
                     "Teams"
                 ],
-                "summary": "Get team details by team name",
-                "operationId": "2f79b1dca977b78c99ff5115059c6162",
+                "summary": "Get a list of teams",
+                "operationId": "getTeams",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "nameteam": {
+                                                "type": "string"
+                                            },
+                                            "logoteam": {
+                                                "type": "string"
+                                            },
+                                            "url": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred while fetching teams."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/team/{team}": {
+            "get": {
+                "tags": [
+                    "Teams"
+                ],
+                "summary": "Get details of a specific team",
+                "operationId": "getTeamDetails",
                 "parameters": [
                     {
                         "name": "team",
@@ -39,32 +170,69 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Team details retrieved successfully",
+                        "description": "Successful operation",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "id": {
-                                            "type": "integer"
-                                        },
                                         "name": {
                                             "type": "string"
                                         },
-                                        "country": {
+                                        "icon": {
                                             "type": "string"
                                         },
-                                        "players": {
+                                        "about": {
+                                            "type": "string"
+                                        },
+                                        "season": {
+                                            "type": "string"
+                                        },
+                                        "roster": {
                                             "type": "array",
                                             "items": {
                                                 "properties": {
-                                                    "id": {
-                                                        "type": "integer"
-                                                    },
                                                     "name": {
                                                         "type": "string"
                                                     },
-                                                    "position": {
+                                                    "image": {
                                                         "type": "string"
+                                                    },
+                                                    "url": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "matches": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "week": {
+                                                        "type": "string"
+                                                    },
+                                                    "dateAndTime": {
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "type": "string"
+                                                    },
+                                                    "score": {
+                                                        "type": "string"
+                                                    },
+                                                    "teams": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "teamName": {
+                                                                    "type": "string"
+                                                                },
+                                                                "teamIcon": {
+                                                                    "type": "string"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
                                                     }
                                                 },
                                                 "type": "object"
@@ -76,10 +244,107 @@
                             }
                         }
                     },
-                    "404": {
-                        "description": "Team not found"
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred while fetching team information."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "TeamInfo": {
+                "properties": {
+                    "teamName": {
+                        "type": "string"
+                    },
+                    "teamIcon": {
+                        "type": "string"
+                    },
+                    "score": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "Match": {
+                "properties": {
+                    "time": {
+                        "type": "string"
+                    },
+                    "teams": {
+                        "properties": {
+                            "teamName1": {
+                                "type": "string"
+                            },
+                            "teamIcon1": {
+                                "type": "string"
+                            },
+                            "score1": {
+                                "type": "string"
+                            },
+                            "teamName2": {
+                                "type": "string"
+                            },
+                            "teamIcon2": {
+                                "type": "string"
+                            },
+                            "score2": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "ScheduleWeek": {
+                "properties": {
+                    "date": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "matches": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Match"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "MatchSchedule": {
+                "properties": {
+                    "week": {
+                        "type": "integer"
+                    },
+                    "schedule": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ScheduleWeek"
+                        }
+                    }
+                },
+                "type": "object"
             }
         }
     }
