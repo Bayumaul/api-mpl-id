@@ -6,6 +6,7 @@ use Goutte\Client;
 use Illuminate\Http\Request;
 
 use function Laravel\Prompts\text;
+use function PHPUnit\Framework\matches;
 
 class ScraperController extends Controller
 {
@@ -33,7 +34,40 @@ class ScraperController extends Controller
             dump($node->text());
         });
     }
-    public function getTeam($team)
+
+    /**
+     * @OA\Get(
+     *     path="/api/team/{team}",
+     *     summary="Get team details by team name",
+     *     tags={"Teams"},
+     *     @OA\Parameter(
+     *         name="team",
+     *         in="path",
+     *         required=true,
+     *         description="Team name",
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Team details retrieved successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="country", type="string"),
+     *             @OA\Property(property="players", type="array", @OA\Items(
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="name", type="string"),
+     *                 @OA\Property(property="position", type="string")
+     *             ))
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response="404",
+     *         description="Team not found"
+     *     )
+     * )
+     */
+    public function getTeamDetails($team)
     {
         $client = new Client();
 
@@ -54,21 +88,38 @@ class ScraperController extends Controller
                 'url' => $url,
             ];
         });
-        // $matchs = $website->filter('match-team')->each(function ($match) {
-        //     $name = $roster->filter('.player-name')->text();
+        $matches = $website->filter('.match-team')->each(function ($match) {
+            $week = $match->filter('.match-detail > .row > div > div:nth-child(1)')->text();
+            $dateAndTime = $match->filter('.match-detail > .row > div > div:nth-child(2)')->text();
+            $status = $match->filter('.match-status-wl')->text();
+            $score = $match->filter('.match-score-team > .score')->text();
+            $teams = $match->filter('.match-logo')->each(function ($team) {
+                $teamName = $team->text();
+                $teamIcon = $team->filter('img')->attr('src');
 
-        //     return [
-        //         'name' => $name,
-        //     ];
-        // });
+                return [
+                    'teamName' => $teamName,
+                    'teamIcon' => $teamIcon,
+                ];
+            });
+            return [
+                'week' => $week,
+                'dateAndTime' => $dateAndTime,
+                'status' => $status,
+                'score' => $score,
+                'teams' => $teams,
+            ];
+        });
 
-        return [
+        $result = [
             'name' => $teamName,
             'icon' => $teamIcon,
             'about' => $aboutTeam,
             'season' => $season,
             'roster' => $rosters,
-            // 'match' => $matchs,
+            'matches' => $matches,
         ];
+
+        return $this->sendResponse($result, 200);
     }
 }
