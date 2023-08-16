@@ -42,7 +42,7 @@ class TeamController extends Controller
         try {
             $client = new Client(HttpClient::create(['timeout' => 60]));
 
-            $crawler = $client->request('GET', 'https://id-mpl.com/teams');
+            $crawler = $client->request('GET', env('BASE_URL') . '/teams');
 
             $result = $crawler->filter('.team-card-outer')->each(function ($node) {
                 $name = $node->filter('.team-name')->text();
@@ -117,7 +117,7 @@ class TeamController extends Controller
     {
         try {
             $client = new Client(HttpClient::create(['timeout' => 60]));
-            $website = $client->request('GET', 'https://id-mpl.com/team/' . $team);
+            $website = $client->request('GET', env('BASE_URL') . '/team' . '/' . $team);
             $teamName = $website->filter('div.team-name > h2')->text();
             $teamIcon = $website->filter('div.team-logo > img')->attr('src');
             $aboutTeam = $website->filter('#about-team > div.main-lates-matches')->text();

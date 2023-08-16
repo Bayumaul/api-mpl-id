@@ -46,7 +46,7 @@ class StandingController extends Controller
     {
         try {
             $client = new Client(HttpClient::create(['timeout' => 60]));
-            $crawler = $client->request('GET', 'https://id-mpl.com/');
+            $crawler = $client->request('GET', env('BASE_URL'));
 
             $result = $crawler->filter('.table tbody tr')->each(function ($row) {
                 $teamRank = $row->filter('.team-rank')->text();
