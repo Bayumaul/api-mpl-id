@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\MatchScheduleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\StandingController;
+use App\Http\Controllers\MatchScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,5 @@ Route::group(['prefix' => 'v1'], function () {
     Route::get('/teams', [TeamController::class, 'getTeams']);
     Route::get('/match-schedule', [MatchScheduleController::class, 'index']);
     Route::get('/match-schedule/{week}', [MatchScheduleController::class, 'getMatchesByWeek']);
+    Route::get('/get-standings', [StandingController::class, 'getStandings']);
 });

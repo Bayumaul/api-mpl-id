@@ -1,8 +1,19 @@
 {
-    "name": "laravel/laravel",
+    "name": "laravel/api-mpl-id",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "description": "Unofficial API for MPL Indonesia. This API provides access to match schedules from MPL Indonesia.",
+    "keywords": [
+        "laravel",
+        "framework",
+        "api",
+        "mpl"
+    ],
+    "authors": [
+        {
+            "name": "Bayu Maulana Ikhsan",
+            "email": "bayu.mualaikhsan123@gmail.com"
+        }
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -53,7 +64,10 @@
     "extra": {
         "laravel": {
             "dont-discover": []
-        }
+        },
+        "api_description": "Unofficial API for accessing match schedules from MPL Indonesia. This API scrapes data from the MPL Indonesia website and provides it in a structured format.",
+        "author": "Bayu Maulana Ikhsan",
+        "email": "bayu.maulanaikhsan123@gmail.com"
     },
     "config": {
         "optimize-autoloader": true,

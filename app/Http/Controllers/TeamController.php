@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Goutte\Client;
+use Symfony\Component\HttpClient\HttpClient;
 
 class TeamController extends Controller
 {
@@ -39,7 +40,7 @@ class TeamController extends Controller
     public function getTeams()
     {
         try {
-            $client = new Client();
+            $client = new Client(HttpClient::create(['timeout' => 60]));
 
             $crawler = $client->request('GET', 'https://id-mpl.com/teams');
 
@@ -115,7 +116,7 @@ class TeamController extends Controller
     public function getTeamDetails($team)
     {
         try {
-            $client = new Client();
+            $client = new Client(HttpClient::create(['timeout' => 60]));
             $website = $client->request('GET', 'https://id-mpl.com/team/' . $team);
             $teamName = $website->filter('div.team-name > h2')->text();
             $teamIcon = $website->filter('div.team-logo > img')->attr('src');

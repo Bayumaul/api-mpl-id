@@ -95,6 +95,80 @@
                 }
             }
         },
+        "/get-standings": {
+            "get": {
+                "tags": [
+                    "Standings"
+                ],
+                "summary": "Get standings data",
+                "operationId": "ab8a34da1aec325a3dd1418d50af34b5",
+                "responses": {
+                    "200": {
+                        "description": "Successful response with standings data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "teamRank": {
+                                                "type": "string",
+                                                "example": "1"
+                                            },
+                                            "teamName": {
+                                                "type": "string",
+                                                "example": "ONIC"
+                                            },
+                                            "matchWL": {
+                                                "type": "string",
+                                                "example": "6 - 2"
+                                            },
+                                            "matchRate": {
+                                                "type": "string",
+                                                "example": "75%"
+                                            },
+                                            "gameWL": {
+                                                "type": "string",
+                                                "example": "13 - 5"
+                                            },
+                                            "gameRate": {
+                                                "type": "string",
+                                                "example": "72%"
+                                            },
+                                            "aggPoints": {
+                                                "type": "string",
+                                                "example": "+8"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error response in case of failure",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "An error occurred while fetching standings."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/teams": {
             "get": {
                 "tags": [
