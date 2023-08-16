@@ -49,7 +49,7 @@ If you'd like to contribute to this project, please follow these steps:
 
 ## License
 
-This project is licensed under the XYZ License. Please see the [LICENSE](LICENSE) file for more information.
+This project is licensed under the MIT License. Please see the [LICENSE](LICENSE) file for more information.
 
 ---
 
