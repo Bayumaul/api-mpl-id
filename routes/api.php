@@ -20,6 +20,11 @@ use App\Http\Controllers\MatchScheduleController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/teest', function () {
+    return response()->json(['data' => 'test berhasil']);
+});
+
 Route::group(['prefix' => 'v1'], function () {
     Route::get('/team/{team}', [TeamController::class, 'getTeamDetails']);
     Route::get('/teams', [TeamController::class, 'getTeams']);
