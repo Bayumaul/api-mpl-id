@@ -47,10 +47,11 @@ class StandingController extends Controller
         try {
             $client = new Client(HttpClient::create(['timeout' => 60]));
             $crawler = $client->request('GET', env('BASE_URL'));
-
+            #DataTables_Table_0 > tbody > tr:nth-child(1) > td.team-info > div > div.team-name > span.d-none.d-lg-block
             $result = $crawler->filter('.table tbody tr')->each(function ($row) {
                 $teamRank = $row->filter('.team-rank')->text();
-                $teamName = $row->filter('.team-name')->text();
+                $teamImage = $row->filter('img')->attr('src');
+                $teamName = $row->filter('div.team-name > span.d-none.d-lg-block')->text();
                 $matchWL = $row->filter('td')->eq(1)->text();
                 $matchRate = $row->filter('td')->eq(2)->text();
                 $gameWL = $row->filter('td')->eq(3)->text();
@@ -59,6 +60,7 @@ class StandingController extends Controller
 
                 return [
                     'teamRank' => $teamRank,
+                    'teamImage' => $teamImage,
                     'teamName' => $teamName,
                     'matchWL' => $matchWL,
                     'matchRate' => $matchRate,
