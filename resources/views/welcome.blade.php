@@ -61,8 +61,8 @@
 
     <!-- Header -->
     <header class="custom-bg-blue py-60 text-center text-white relative">
-        <img src="{{ asset('MPLID_BANNER.jpg') }}" alt="Banner"
-            class="absolute inset-0 w-full h-full object-cover opacity-50">
+        <img src="https://mplid-storage.sgp1.digitaloceanspaces.com/season12/kv-banners/MPLID_BANNER.jpg?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=53XCITH3UP462OQE23ZY%2F20230817%2Fsgp1%2Fs3%2Faws4_request&X-Amz-Date=20230817T103759Z&X-Amz-SignedHeaders=host&X-Amz-Expires=21600&X-Amz-Signature=40547d29279f195f355533fd97c01ede6c620cd38f1f9ba430a9276667ce30dd"
+            alt="Banner" class="absolute inset-0 w-full h-full object-cover opacity-50">
         <div class="container mx-auto relative z-10">
             <h1 class="text-4xl md:text-6xl font-semibold mb-2">API Unofficial MPL Indonesia</h1>
             <p class="text-lg md:text-xl mb-8">Akses Data MPL Indonesia dengan Mudah</p>
